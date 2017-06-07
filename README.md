@@ -12,16 +12,16 @@ You can sign up for a Stripe account at https://stripe.com.
 
 ## Stripe API version
 
-Stripe API 4.12.0 (Release date 05/06/2017)
-Stripe Elements integration with js version v3
+1. Stripe API 4.12.0 (Release date 05/06/2017)
+2. Stripe Elements integration with js version v3
 
 ## Requirements
 
-PHP 5.3.3 and later.
-WHMCS (V7.X, V6.X, V5.X)
-cURL must be enabled (This is most likely already enabled on your server, but you can contact your hosting provider if you are unsure)
-SSL certificate installed (in order to process live transactions)
-Stripe merchant account
+1. PHP 5.3.3 and later.
+2. WHMCS (V7.X, V6.X, V5.X)
+3. cURL must be enabled (This is most likely already enabled on your server, but you can contact your hosting provider if you are unsure)
+4. SSL certificate installed (in order to process live transactions)
+5. Stripe merchant account
 
 ## Instructions For Use
 
