@@ -7,6 +7,22 @@ This is a free and open source Stripe Payment Gateway for WHMCS that supports on
 
 This gateway allows the [WHMCS](http://www.whmcs.com) billing system to use [Stripe's](https://www.stripe.com) one time and reoccurring payment gateway capabilities. [Stripe](https://www.stripe.com) provides the unique ability to take a client's credit card information without ever having the client leave your site, but it also allows for credit card data to never get stored in or even pass through your own server, eliminating costly concerns over PCI compliance. This gateway for WHMCS is being released free for anyone, although it should still be considered in beta as there are likely still bugs to work out of it.
 
+
+You can sign up for a Stripe account at https://stripe.com.
+
+## Stripe API version
+
+Stripe API 4.12.0 (Release date 05/06/2017)
+Stripe Elements integration with js version v3
+
+## Requirements
+
+PHP 5.3.3 and later.
+WHMCS (V7.X, V6.X, V5.X)
+cURL must be enabled (This is most likely already enabled on your server, but you can contact your hosting provider if you are unsure)
+SSL certificate installed (in order to process live transactions)
+Stripe merchant account
+
 ## Instructions For Use
 
 1. Download the [Stripe library for PHP](https://github.com/stripe/stripe-php). Create a new folder called `stripe` within the `/modules/gateways/` directory of your WHMCS installation and copy the contents of the `lib` folder (from your download) into that newly created folder.
