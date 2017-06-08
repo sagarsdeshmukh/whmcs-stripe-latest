@@ -169,7 +169,7 @@
 
 	<p>{$explanation} Please make sure the credit card billing information below is correct before continuing and then click <strong>Pay Now</strong>.</p>
 
-<form class="form-horizontal" action="" method="POST" id="payment-form">
+<form class="form-horizontal" action="ccpay.php" method="POST" id="payment-form">
 <br/>
 
   <fieldset class="onecol">
