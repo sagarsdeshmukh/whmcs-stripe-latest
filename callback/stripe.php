@@ -1,7 +1,16 @@
 <?php
 
+use WHMCS\Database\Capsule;
+
 # Required File Includes
-include("../../../dbconnect.php");
+if (file_exists('../../../dbconnect.php')) {
+    include '../../../dbconnect.php';
+} else if (file_exists('../../../init.php')) {
+    include '../../../init.php';
+} else {
+    die('[ERROR] In modules/gateways/stripe/callback/stripe.php: include error: Cannot find dbconnect.php or init.php');
+}
+
 include("../../../includes/functions.php");
 include("../../../includes/gatewayfunctions.php");
 include("../../../includes/invoicefunctions.php");
