@@ -3,7 +3,16 @@
 define("CLIENTAREA",true);
 define("FORCESSL",true);
 
-require("dbconnect.php");
+use WHMCS\Database\Capsule;
+
+if (file_exists('dbconnect.php')) {
+	require("dbconnect.php");
+} else if (file_exists('init.php')) {
+	require("init.php");
+} else {
+    die('[ERROR] In ccpay.php: include error: Cannot find dbconnect.php or init.php');
+}
+
 require("includes/functions.php");
 require("includes/clientareafunctions.php");
 include("includes/gatewayfunctions.php");
@@ -44,34 +53,35 @@ if ($_SESSION['uid']) {
 
 	if ($_POST['frominvoice'] == "true" || $_POST['ccpay'] == "true") { 
 
-			$result = mysql_query("SELECT firstname,lastname,email,address1,address2,state,postcode,city FROM tblclients WHERE id=".(int)$_SESSION['uid']);
-			$data = mysql_fetch_array($result);
+			$result = Capsule::table('tblclients')->select('firstname,lastname,email,address1,address2,state,postcode,city')->where('id', (int)$_SESSION['uid'])->first();
+    
+			$userid = $result->firstname;
 			
-			$firstname = $data[0];
+			$firstname = $result->firstname;
 			$smartyvalues["firstname"] = $firstname;
 			
-			$lastname = $data[1];
+			$lastname = $result->lastname;
 			$smartyvalues["lastname"] = $lastname;
 			
 			$prepared_name = $firstname . " " . $lastname;
 			$smartyvalues["name"] = $prepared_name;
 			
-	  		$email = $data[2];
+	  		$email = $result->email;
 	  		$smartyvalues["email"] = $email;
 	  		
-	  		$address1 = $data[3];
+	  		$address1 = $result->address1;
 	  		$smartyvalues["address1"] = $address1;
 	  		
-	  		$address2 = $data[4];
+	  		$address2 = $result->address2;
 	  		$smartyvalues["address2"] = $address2;
 	  		
-	  		$city = $data[7];
+	  		$city = $result->city;
 	  		$smartyvalues["city"] = $city;
 	  		
-	  		$state = $data[5];
+	  		$state = $result->state;
 	  		$smartyvalues["state"] = $state;
 	  		
-	  		$zipcode = $data[6];
+	  		$zipcode = $result->postcode;
 	  		$smartyvalues["zipcode"] = $zipcode;
 	
 		// Is this a one time payment or is a subscription being set up?
