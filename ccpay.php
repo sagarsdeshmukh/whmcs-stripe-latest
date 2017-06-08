@@ -54,9 +54,7 @@ if ($_SESSION['uid']) {
 	if ($_POST['frominvoice'] == "true" || $_POST['ccpay'] == "true") { 
 
 			$result = Capsule::table('tblclients')->select('firstname,lastname,email,address1,address2,state,postcode,city')->where('id', (int)$_SESSION['uid'])->first();
-    
-			$userid = $result->firstname;
-			
+
 			$firstname = $result->firstname;
 			$smartyvalues["firstname"] = $firstname;
 			
