@@ -18,7 +18,7 @@ You can sign up for a Stripe account at https://stripe.com.
 ## Requirements
 
 1. PHP 5.3.3 and later.
-2. WHMCS (V7.X, V6.X, V5.X)
+2. WHMCS (V7.X, V6.X)
 3. cURL must be enabled (This is most likely already enabled on your server, but you can contact your hosting provider if you are unsure)
 4. SSL certificate installed (in order to process live transactions)
 5. Stripe merchant account
