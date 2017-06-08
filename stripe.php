@@ -21,11 +21,21 @@ function stripe_link($params) {
     $amount = $params['amount']; # Format: ##.##
 
 	// Perform lookup to see if the invoice is for a recurring service
-	$result = mysql_query("SELECT relid, amount, description FROM tblinvoiceitems WHERE type='Hosting' AND invoiceid='" . $invoiceid . "'");
-    $grab_relid = mysql_fetch_row($result);
-    $relid = $grab_relid[0];
-    $subscribe_price = $grab_relid[1];
-    $plan_name = $grab_relid[2];
+	use WHMCS\Database\Capsule;
+	
+	if (file_exists('../../dbconnect.php')) {
+		include '../../dbconnect.php';
+	} else if (file_exists('../../init.php')) {
+		include '../../init.php';
+	} else {
+		die('[ERROR] In modules/gateways/stripe.php: include error: Cannot find dbconnect.php or init.php');
+	}
+	
+	$result = Capsule::table('tblinvoiceitems')->select('relid, amount, description')->where('type', 'Hosting')->where('invoiceid', $invoiceid)->first();
+
+    $relid = $result->relid;
+    $subscribe_price = $result->amount;
+    $plan_name = $result->description;
     
     if ($relid != 0 || $relid != "") {
 	    $wording = "Pay Once";
