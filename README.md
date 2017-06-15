@@ -25,12 +25,11 @@ You can sign up for a Stripe account at https://stripe.com.
 
 ## Instructions For Use
 
-1. Download the [Stripe library for PHP](https://github.com/stripe/stripe-php). Create a new folder called `stripe` within the `/modules/gateways/` directory of your WHMCS installation and copy the contents of the `lib` folder (from your download) into that newly created folder.
-2. Copy the file in the repository's root folder called `stripe.php` and place it into the `/modules/gateways/` folder of your WHMCS installation.
-3. From within the `callback` folder of the repository, copy the other `stripe.php` file and place it into the `/modules/gateways/callback` folder of your WHMCS installation.
-4. Copy the `ccpay.php` file from the repository into the root directory of your WHMCS installation.
-5. Finally, copy the `clientareacreditcard-stripe.tpl` file into the root level of the theme folder you are currently using for WHMCS. For example, if you're using the `default` theme, then copy this file to `/templates/default/`.
-6. Add a webhook in Stripe to `https://yourwhmcsinstall.com/modules/gateways/callback/stripe.php`.
+1. Copy the file in the repository's root folder called `stripe.php` and place it into the `/modules/gateways/` folder of your WHMCS installation.
+2. From within the `callback` folder of the repository, copy the other `stripe.php` file and place it into the `/modules/gateways/callback` folder of your WHMCS installation.
+3. Copy the `ccpay.php` file from the repository into the root directory of your WHMCS installation.
+4. Finally, copy the `clientareacreditcard-stripe.tpl` file into the root level of the theme folder you are currently using for WHMCS. For example, if you're using the `default` theme, then copy this file to `/templates/default/`.
+5. Add a webhook in Stripe to `https://yourwhmcsinstall.com/modules/gateways/callback/stripe.php`.
 
 In the end, your folder structure should look roughly like the diagram below, with a ccpay.php file in the root of your install, a stripe.php in `/modules/gateways/callback`, a stripe.php in `/modules/gateways/`, a `clientareacreditcard-stripe.tpl` in the root of your WHMCS active template folder, and the `lib` folder of the Stripe API in the newly-created `/modules/gateways/stripe/` folder.
 
