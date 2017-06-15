@@ -114,21 +114,30 @@ if ($_SESSION['uid']) {
 					$smartyvalues["success"] = true;
 		
 		
-				} catch(Stripe_CardError $e) {
+				} catch(\Stripe\Error\Card $e) {
+					// Since it's a decline, \Stripe\Error\Card will be caught
+					$error = $e->getMessage();
+					$smartyvalues["processingerror"] = 'Error: ' . $error . '.';
 				
-				$error = $e->getMessage();
-				$smartyvalues["processingerror"] = 'Error: ' . $error . '.';
-				  
-				} catch (Stripe_InvalidRequestError $e) {
-				  
-				} catch (Stripe_AuthenticationError $e) {
+				} catch (\Stripe\Error\RateLimit $e) {
+					// Too many requests made to the API too quickly
+					send_error("RateLimit",$e);
+				} catch (\Stripe\Error\InvalidRequest $e) {
+					// Invalid parameters were supplied to Stripe's API
+					send_error("InvalidRequest",$e);
+				} catch (\Stripe\Error\Authentication $e) {
+					// Authentication with Stripe's API failed
+					// (maybe you changed API keys recently)
 					send_error("authentication",$e);
-				} catch (Stripe_ApiConnectionError $e) {
+				} catch (\Stripe\Error\ApiConnection $e) {
+					// Network communication with Stripe failed
 					send_error("network", $e);
-				} catch (Stripe_Error $e) {
+				} catch (\Stripe\Error\Base $e) {
+					// Display a very generic error to the user, and maybe send
+					// yourself an email
 					send_error("generic", $e);
 				} catch (Exception $e) {
-				
+					// Something else happened, completely unrelated to Stripe
 					if ($e->getMessage() == "zip_check_invalid") {
 						$smartyvalues["processingerror"] = 'Error: The address information on your account does not match that of the credit card you are trying to use. Please try again or contact us if the problem persists.';
 					} else if ($e->getMessage() == "address_check_invalid") {
@@ -238,21 +247,29 @@ if ($_SESSION['uid']) {
 					// Payment has succeeded, no exceptions were thrown or otherwise caught
 					$smartyvalues["success"] = true;
 				
-				} catch(Stripe_CardError $e) {
-				
-				$error = $e->getMessage();
-				$smartyvalues["processingerror"] = 'Error: ' . $error . '.';
-				  
-				} catch (Stripe_InvalidRequestError $e) {
-				  
-				} catch (Stripe_AuthenticationError $e) {
+				} catch(\Stripe\Error\Card $e) {
+					// Since it's a decline, \Stripe\Error\Card will be caught
+					$error = $e->getMessage();
+					$smartyvalues["processingerror"] = 'Error: ' . $error . '.';
+				} catch (\Stripe\Error\RateLimit $e) {
+					// Too many requests made to the API too quickly
+					send_error("RateLimit",$e);
+				} catch (\Stripe\Error\InvalidRequest $e) {
+					// Invalid parameters were supplied to Stripe's API
+					send_error("InvalidRequest",$e);
+				} catch (\Stripe\Error\Authentication $e) {
+					// Authentication with Stripe's API failed
+					// (maybe you changed API keys recently)
 					send_error("authentication",$e);
-				} catch (Stripe_ApiConnectionError $e) {
+				} catch (\Stripe\Error\ApiConnection $e) {
+					// Network communication with Stripe failed
 					send_error("network", $e);
-				} catch (Stripe_Error $e) {
+				} catch (\Stripe\Error\Base $e) {
+					// Display a very generic error to the user, and maybe send
+					// yourself an email
 					send_error("generic", $e);
 				} catch (Exception $e) {
-				
+					// Something else happened, completely unrelated to Stripe
 					if ($e->getMessage() == "zip_check_invalid") {
 						$smartyvalues["processingerror"] = 'Error: The address information on your account does not match that of the credit card you are trying to use. Please try again or contact us if the problem persists.';
 					} else if ($e->getMessage() == "address_check_invalid") {
