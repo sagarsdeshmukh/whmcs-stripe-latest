@@ -187,14 +187,15 @@ if ($_SESSION['uid']) {
 				
 					// Find out if this customer already has a paying item with stripe and if they have a subscription with it
 					$current_uid = $_SESSION['uid'];
-					$q = mysql_query("SELECT subscriptionid FROM tblhosting WHERE userid='" . $current_uid . "' AND paymentmethod='stripe' AND subscriptionid !=''");
-					if (mysql_num_rows($q) > 0) {
-						$data = mysql_fetch_array($q);
-						$stripe_customer_id = $data[0];
+					
+					$q = Capsule::table('tblhosting')->select('subscriptionid')->where('userid', (int)$current_uid)->where('paymentmethod', 'stripe')->where('subscriptionid', '<>', '')->first();
+					
+					if ($q) {
+						$stripe_customer_id = $q->subscriptionid;
 					} else {
 						$stripe_customer_id = "";
 					}
-					
+
 					if ($stripe_customer_id == "") {
 						$customer = \Stripe\Customer::create(array( // Sign them up for the requested plan and add the customer id into the subscription id
 							"card" => $token,
@@ -202,7 +203,7 @@ if ($_SESSION['uid']) {
 							"email" => $email
 						));
 						$cust_id = $customer->id;
-						$q = mysql_query("UPDATE tblhosting SET subscriptionid='" . $cust_id . "' WHERE id='" . $ng_plan_id . "'");
+						Capsule::table('tblhosting')->where('id', $ng_plan_id)->update(array('subscriptionid' => $cust_id));
 					} else { // Create the customer from scratch
 						$c = \Stripe\Customer::retrieve($stripe_customer_id);
 						$c->updateSubscription(array("plan" => "basic", "prorate" => false));
