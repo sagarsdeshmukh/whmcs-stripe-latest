@@ -3,6 +3,7 @@
 define("CLIENTAREA",true);
 define("FORCESSL",true);
 
+
 use WHMCS\Database\Capsule;
 
 if (file_exists('dbconnect.php')) {
