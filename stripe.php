@@ -79,6 +79,8 @@ function stripe_link($params) {
 	
 }
 
+/* This method use to make payment refund */
+
 function stripe_refund($params) {
 
 	require_once('stripe/Stripe.php');
