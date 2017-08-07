@@ -305,4 +305,7 @@ $templatefile = "clientareacreditcard-stripe";
 
 outputClientArea($templatefile);
 
+
+
+
 ?>
